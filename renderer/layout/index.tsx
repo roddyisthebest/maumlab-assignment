@@ -12,12 +12,18 @@ const Container = styled.div`
 
 const Header = styled.div`
   width: 100px;
+`;
+
+const HeaderInstance = styled.div`
   background-color: #e1e2e2;
   border-right: 1px solid #bfbfbf;
   display: flex;
   flex-direction: column;
   gap: 30px 0;
   padding: 30px 0;
+  height: 100%;
+  position: fixed;
+  width: 100px;
 `;
 
 const Button = styled.button<{ isItNow: boolean }>`
@@ -35,6 +41,7 @@ const Body = styled.div`
 const BodyHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 25px;
 `;
 
 const BodyHeaderText = styled.span`
@@ -57,12 +64,14 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Container>
       <Header>
-        <Button onClick={goToHome} isItNow={router.pathname === '/home'}>
-          <HiUser color="#666666" size={35}></HiUser>
-        </Button>
-        <Button onClick={goToChat} isItNow={router.pathname === '/chat'}>
-          <RiChat1Fill color="#666666" size={35}></RiChat1Fill>
-        </Button>
+        <HeaderInstance>
+          <Button onClick={goToHome} isItNow={router.pathname === '/home'}>
+            <HiUser color="#666666" size={35}></HiUser>
+          </Button>
+          <Button onClick={goToChat} isItNow={router.pathname === '/chat'}>
+            <RiChat1Fill color="#666666" size={35}></RiChat1Fill>
+          </Button>
+        </HeaderInstance>
       </Header>
       <Body>
         <BodyHeader>
