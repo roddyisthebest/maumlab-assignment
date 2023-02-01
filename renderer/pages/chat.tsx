@@ -7,15 +7,15 @@ const Container = styled.div`
   flex: 1;
 `;
 
-function Home() {
+function Chat() {
   return (
     <React.Fragment>
       <Head>
-        <title>홈</title>
+        <title>Chat - Nextron (with-typescript)</title>
       </Head>
-      <Container>Home</Container>
+      <Container>Chat</Container>
     </React.Fragment>
   );
 }
 
-export default Home;
+export default Chat;
