@@ -6,3 +6,7 @@ a {
   color: #3a2f2a;
   text-decoration: none;
 }
+
+button {
+  cursor: pointer;
+}

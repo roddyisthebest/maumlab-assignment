@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const InputsWrapper = styled.div`
   min-width: 300px;
-  height: 120px;
+  height: 180px;
   background-color: white;
   border: 1px solid #d1d1d1;
   border-radius: 10px;
@@ -51,11 +51,11 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-function Login() {
+function Register() {
   return (
     <React.Fragment>
       <Head>
-        <title>로그인</title>
+        <title>회원가입</title>
       </Head>
       <Container>
         <RiChat1Fill
@@ -67,15 +67,18 @@ function Login() {
           <InputWrapper isThisTop={true}>
             <Input placeholder="ID를 입력해주세요."></Input>
           </InputWrapper>
-          <InputWrapper isThisTop={false}>
+          <InputWrapper isThisTop={true}>
             <Input placeholder="비밀번호를 입력해주세요."></Input>
           </InputWrapper>
+          <InputWrapper isThisTop={false}>
+            <Input placeholder="닉네임을 입력해주세요."></Input>
+          </InputWrapper>
         </InputsWrapper>
-        <Button>로그인</Button>
-        <Link href="/register">회원가입하기</Link>
+        <Button>회원가입</Button>
+        <Link href="/login">로그인하기</Link>
       </Container>
     </React.Fragment>
   );
 }
 
-export default Login;
+export default Register;
