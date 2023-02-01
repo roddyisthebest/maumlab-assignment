@@ -38,7 +38,7 @@ const Introducing = styled.span`
   color: #a3a3a3;
 `;
 
-function User({
+function UserColumn({
   data,
 }: {
   data: {
@@ -62,4 +62,4 @@ function User({
   );
 }
 
-export default User;
+export default UserColumn;

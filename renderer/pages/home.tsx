@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import User from '../components/User';
+import UserColumn from '../components/UserColumn';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -51,11 +51,11 @@ function Home() {
         <title>홈</title>
       </Head>
       <Container>
-        <User data={me}></User>
+        <UserColumn data={me}></UserColumn>
         <Division></Division>
         <Title>친구 100</Title>
         {users.map((user) => (
-          <User data={user}></User>
+          <UserColumn data={user} key={user.name}></UserColumn>
         ))}
       </Container>
     </React.Fragment>
