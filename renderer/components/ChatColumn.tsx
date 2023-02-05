@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { HiUserGroup } from 'react-icons/hi';
+import { useRouter } from 'next/router';
 
 const Container = styled.button`
   width: 100%;
@@ -73,8 +74,9 @@ function ChatColumn({
     type: 'multi' | 'single';
   };
 }) {
+  const router = useRouter();
   const onClicked = useCallback(() => {
-    alert('채팅방 입장!');
+    router.push('/room');
   }, []);
 
   return (
