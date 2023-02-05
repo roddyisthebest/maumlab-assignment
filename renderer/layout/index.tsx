@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import { HiUser } from 'react-icons/hi';
 import { RiChat1Fill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { IoAddCircleSharp } from 'react-icons/io5';
+import Popup from '../components/Popup';
+import AddFriends from '../components/AddFriends';
 
 const Container = styled.div`
   min-height: 100vh;
@@ -52,6 +54,7 @@ const BodyHeaderText = styled.span`
 
 function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const [visibility, setVisibility] = useState<boolean>(false);
 
   const goToHome = useCallback(() => {
     router.push('/home');
@@ -59,6 +62,10 @@ function Layout({ children }: { children: React.ReactNode }) {
 
   const goToChat = useCallback(() => {
     router.push('/chat');
+  }, []);
+
+  const setVisibilityToTrue = useCallback(() => {
+    setVisibility(true);
   }, []);
 
   return (
@@ -79,13 +86,16 @@ function Layout({ children }: { children: React.ReactNode }) {
             {router.pathname === '/home' ? '유저 리스트' : '채팅'}
           </BodyHeaderText>
           {router.pathname === '/home' ? null : (
-            <Button isItNow={true}>
+            <Button isItNow={true} onClick={setVisibilityToTrue}>
               <IoAddCircleSharp color="#666666" size={35}></IoAddCircleSharp>
             </Button>
           )}
         </BodyHeader>
         {children}
       </Body>
+      <Popup visibility={visibility} setVisibility={setVisibility}>
+        <AddFriends setVisibility={setVisibility} />
+      </Popup>
     </Container>
   );
 }
