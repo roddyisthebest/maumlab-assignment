@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import Layout from '../layout';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import firebase from '../firebase';
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [headerMode, setHeaderMode] = useState<boolean>(false);

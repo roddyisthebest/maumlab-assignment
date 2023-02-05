@@ -72,7 +72,7 @@ function Login() {
           </InputWrapper>
         </InputsWrapper>
         <Button>로그인</Button>
-        <Link href="/home">회원가입하기</Link>
+        <Link href="/register">회원가입하기</Link>
       </Container>
     </React.Fragment>
   );
