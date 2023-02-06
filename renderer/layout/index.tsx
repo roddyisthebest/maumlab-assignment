@@ -6,7 +6,7 @@ import { useCallback, useState } from 'react';
 import { IoAddCircleSharp } from 'react-icons/io5';
 import Popup from '../components/Popup';
 import AddFriends from '../components/AddFriends';
-
+import { signoutEmail } from '../firebase';
 const Container = styled.div`
   min-height: 100vh;
   display: flex;
@@ -52,6 +52,18 @@ const BodyHeaderText = styled.span`
   color: black;
 `;
 
+const ButtonText = styled.span`
+  color: #666666;
+  font-size: 15px;
+  font-weight: 600;
+`;
+
+const Division = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: #bfbfbf;
+`;
+
 function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [visibility, setVisibility] = useState<boolean>(false);
@@ -68,6 +80,17 @@ function Layout({ children }: { children: React.ReactNode }) {
     setVisibility(true);
   }, []);
 
+  const logout = useCallback(async () => {
+    try {
+      if (confirm('정말 로그아웃 하시겠습니까?')) {
+        await signoutEmail();
+        router.push('/login');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -77,6 +100,10 @@ function Layout({ children }: { children: React.ReactNode }) {
           </Button>
           <Button onClick={goToChat} isItNow={router.pathname === '/chat'}>
             <RiChat1Fill color="#666666" size={35}></RiChat1Fill>
+          </Button>
+          <Division></Division>
+          <Button onClick={logout} isItNow={true}>
+            <ButtonText>로그아웃</ButtonText>
           </Button>
         </HeaderInstance>
       </Header>
