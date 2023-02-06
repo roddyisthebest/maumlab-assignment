@@ -3,7 +3,11 @@ import { initializeApp } from 'firebase/app';
 import { updateProfile } from 'firebase/auth';
 
 // import { getFirestore } from 'firebase/firestore';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,6 +37,10 @@ const registerEmail = async (
   );
 };
 
+const signinEmail = async (email: string, password: string) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
+
 // const db = getFirestore(app);
 
-export { registerEmail };
+export { registerEmail, signinEmail };

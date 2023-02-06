@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { RiChat1Fill } from 'react-icons/ri';
+import { signinEmail } from '../firebase';
+import { useRouter } from 'next/router';
 
 const Container = styled.div`
   background: #ffe742;
@@ -52,6 +54,45 @@ const Button = styled.button`
 `;
 
 function Login() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  const onChangeEmail = useCallback(
+    ({ target: { value } }: { target: { value: string } }) => {
+      setEmail(value);
+    },
+    []
+  );
+
+  const onChangePassword = useCallback(
+    ({ target: { value } }: { target: { value: string } }) => {
+      setPassword(value);
+    },
+    []
+  );
+
+  const onSubmit = useCallback(async () => {
+    if (email.length !== 0 && password.length !== 0) {
+      try {
+        await signinEmail(email, password);
+        router.push('/login');
+      } catch ({ code, message }) {
+        alert(`${code}\n ${message}`);
+      }
+    } else {
+      let message = '';
+      if (email.length === 0) {
+        message += '이메일을 입력해주세요.\n';
+      }
+      if (password.length === 0) {
+        message += '비밀번호를 입력해주세요.\n';
+      }
+      alert(message);
+    }
+  }, [email, password]);
+
   return (
     <React.Fragment>
       <Head>
@@ -65,13 +106,22 @@ function Login() {
         ></RiChat1Fill>
         <InputsWrapper>
           <InputWrapper isThisTop={true}>
-            <Input placeholder="ID를 입력해주세요."></Input>
+            <Input
+              placeholder="ID를 입력해주세요."
+              value={email}
+              onChange={onChangeEmail}
+            ></Input>
           </InputWrapper>
           <InputWrapper isThisTop={false}>
-            <Input placeholder="비밀번호를 입력해주세요."></Input>
+            <Input
+              placeholder="비밀번호를 입력해주세요."
+              type="password"
+              value={password}
+              onChange={onChangePassword}
+            ></Input>
           </InputWrapper>
         </InputsWrapper>
-        <Button>로그인</Button>
+        <Button onClick={onSubmit}>로그인</Button>
         <Link href="/register">회원가입하기</Link>
       </Container>
     </React.Fragment>

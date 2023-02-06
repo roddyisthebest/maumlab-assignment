@@ -41,7 +41,7 @@ function Chat() {
       </Head>
       <Container>
         {rooms.map((room) => (
-          <ChatColumn data={room}></ChatColumn>
+          <ChatColumn data={room} key={room.name}></ChatColumn>
         ))}
       </Container>
     </React.Fragment>

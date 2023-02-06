@@ -32,17 +32,19 @@ function Home() {
     introducing: 'omg',
   });
   const [users, setUsers] = useState<
-    { name: string; img: string; introducing: string }[]
+    { name: string; img: string; introducing: string; id: number }[]
   >([
     {
       name: '해린',
       img: 'https://pbs.twimg.com/media/FldPH1qaYAI6jai?format=jpg&name=large',
       introducing: '냐옹',
+      id: 1,
     },
     {
       name: '다니엘',
       img: 'https://www.kukinews.com/data/kuk/cache/2022/09/08/kuk202209080356.680x.0.jpg',
       introducing: '헹냐헹야',
+      id: 2,
     },
   ]);
   return (
@@ -55,7 +57,7 @@ function Home() {
         <Division></Division>
         <Title>친구 100</Title>
         {users.map((user) => (
-          <UserColumn data={user} key={user.name}></UserColumn>
+          <UserColumn data={user} key={user.id}></UserColumn>
         ))}
       </Container>
     </React.Fragment>

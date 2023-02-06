@@ -88,7 +88,6 @@ function ChatColumn({
       ) : (
         <Image url={data.img}></Image>
       )}
-
       <Info>
         <InfoColumn>
           <Name>{data.name}</Name>
