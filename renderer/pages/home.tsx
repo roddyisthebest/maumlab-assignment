@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Head from 'next/head';
 import UserColumn from '../components/UserColumn';
 import styled from 'styled-components';
-
+import {
+  collection,
+  getDoc,
+  doc,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { db } from '../firebase';
 const Container = styled.div`
   flex: 1;
   display: flex;
@@ -26,27 +35,32 @@ function Home() {
     name: string;
     img: string;
     introducing: string;
-  }>({
-    name: '하니',
-    img: 'https://media.bunjang.co.kr/product/210651557_1_1673002681_w360.jpg',
-    introducing: 'omg',
-  });
+  }>({ img: '', name: '', introducing: '' });
   const [users, setUsers] = useState<
     { name: string; img: string; introducing: string; id: number }[]
-  >([
-    {
-      name: '해린',
-      img: 'https://pbs.twimg.com/media/FldPH1qaYAI6jai?format=jpg&name=large',
-      introducing: '냐옹',
-      id: 1,
-    },
-    {
-      name: '다니엘',
-      img: 'https://www.kukinews.com/data/kuk/cache/2022/09/08/kuk202209080356.680x.0.jpg',
-      introducing: '헹냐헹야',
-      id: 2,
-    },
-  ]);
+  >([]);
+
+  const getData = useCallback(async () => {
+    const { currentUser } = getAuth();
+
+    try {
+      const q = query(collection(db, 'user'));
+
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach((doc: any) => {
+        if (doc.data().id !== currentUser.uid) {
+          setUsers((prev) => [doc.data(), ...prev]);
+        } else {
+          setMe(doc.data());
+        }
+      });
+    } catch (e) {}
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <React.Fragment>
       <Head>
@@ -55,7 +69,7 @@ function Home() {
       <Container>
         <UserColumn data={me}></UserColumn>
         <Division></Division>
-        <Title>친구 100</Title>
+        <Title>친구 {users.length}</Title>
         {users.map((user) => (
           <UserColumn data={user} key={user.id}></UserColumn>
         ))}

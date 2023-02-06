@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const InputsWrapper = styled.div`
   min-width: 300px;
-  height: 180px;
+  height: 240px;
   background-color: white;
   border: 1px solid #d1d1d1;
   border-radius: 10px;
@@ -57,10 +57,12 @@ function Register() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
+  const [introducing, setIntroducing] = useState<string>('');
 
   const [emailValid, setEmailValid] = useState<boolean>(false);
   const [passwordValid, setPasswordValid] = useState<boolean>(false);
   const [nicknameValid, setNicknameValid] = useState<boolean>(false);
+  const [introducingValid, setIntroducingValid] = useState<boolean>(false);
 
   const onChangeEmail = useCallback(
     ({ target: { value } }: { target: { value: string } }) => {
@@ -83,17 +85,19 @@ function Register() {
     []
   );
 
+  const onChangeIntroducing = useCallback(
+    ({ target: { value } }: { target: { value: string } }) => {
+      setIntroducing(value);
+    },
+    []
+  );
+
   const onSubmit = useCallback(async () => {
-    if (emailValid && passwordValid && nicknameValid) {
+    if (emailValid && passwordValid && nicknameValid && introducingValid) {
       try {
-        await registerEmail(email, password, nickname);
-        if (
-          confirm(
-            `${nickname}님! 성공적으로 가입되었습니다!\n 로그인페이지로 이동하시겠습니까?`
-          )
-        ) {
-          router.push('/login');
-        }
+        await registerEmail(email, password, nickname, introducing);
+        alert(`${nickname}님! 성공적으로 가입되었습니다!`);
+        router.push('/home');
       } catch ({ code }) {
         if (code === 'auth/email-already-in-use') {
           alert('등록된 이메일입니다.');
@@ -113,10 +117,21 @@ function Register() {
       if (!nicknameValid) {
         message += '닉네임 (2자리 이상, 10자리 미만) 형식에 맞지 않습니다.';
       }
+      if (!introducingValid) {
+        message += '자기소개 (3자리 이상, 15자리 미만) 형식에 맞지 않습니다.';
+      }
 
       alert(message);
     }
-  }, [email, password, nickname, emailValid, passwordValid, nicknameValid]);
+  }, [
+    email,
+    password,
+    nickname,
+    emailValid,
+    passwordValid,
+    nicknameValid,
+    introducingValid,
+  ]);
 
   useEffect(() => {
     const emailRule =
@@ -132,6 +147,10 @@ function Register() {
   useEffect(() => {
     setNicknameValid(nickname.length > 1 && nickname.length < 10);
   }, [nickname]);
+
+  useEffect(() => {
+    setIntroducingValid(introducing.length > 2 && introducing.length < 15);
+  }, [introducing]);
   return (
     <React.Fragment>
       <Head>
@@ -159,11 +178,18 @@ function Register() {
               type="password"
             ></Input>
           </InputWrapper>
-          <InputWrapper isThisTop={false}>
+          <InputWrapper isThisTop={true}>
             <Input
               placeholder="닉네임을 입력해주세요."
               onChange={onChangeNickname}
               value={nickname}
+            ></Input>
+          </InputWrapper>
+          <InputWrapper isThisTop={false}>
+            <Input
+              placeholder="자기소개를 입력해주세요."
+              onChange={onChangeIntroducing}
+              value={introducing}
             ></Input>
           </InputWrapper>
         </InputsWrapper>

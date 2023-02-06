@@ -15,10 +15,12 @@
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
     "firebase": "^9.17.1",
+    "md5": "^2.3.0",
     "react-icons": "^4.7.1",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
+    "@types/md5": "^2.3.2",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
     "@types/styled-components": "^5.1.26",
